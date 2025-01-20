@@ -14,7 +14,7 @@ It has all the resource material you will need for **Spring 2025 CS1004 Object O
 Learning is better together! If you have any questions, feel free to:
 - **Drop an Email** at sumaiyah@nu.edu.pk
 - **Reach out in class**
-- **Reach out on Discord** https://discord.gg/
+- **Reach out on Discord** https://discord.gg/85wvSrPAfg
 
 Enjoy your coding journey and remember: **The best way to learn is by doing**!
 
