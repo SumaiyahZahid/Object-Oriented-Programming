@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dr {
+private:
+    string name;
+    int age;
+    int experience;
+    int patientCount;
+    string patients_name[10]; 
+    string qualification;
+public:
+    Dr(string n, string spec, int exp) {
+        name = n;
+        experience = exp;
+        patientCount = 0;
+    }
+    void setName(string n) { name = n; }
+    void setQualification(string spec) { qualification = spec; }
+
+    string getName() { return name; }
+    int getExperience() { return experience; }
+
+    void assignPatient(string patientName) {
+        if (patientCount < 10) {
+            patients_name[patientCount] = patientName;
+            patientCount++;
+            cout << "Patient " << patientName << " assigned to Dr. " << name << endl;
+        } else {
+            cout << "Cannot assign more patients. Maximum limit reached." << endl;
+        }
+    }
+
+    void displayInfo() {
+        cout << "Dr. " << name <<  ", " << experience << " years experience)" << endl;
+    }
+    int calculateSalary() {
+        if (qualification == "MBBS") {
+            return 100000;} 
+        else if (qualification == "FCPS1") {
+            return 200000; } 
+        else if (qualification == "FCPS2") {
+            return 400000; } 
+    }
+};
+
+int main() {
+
+    Dr doctor1("Strange", "Cardiologist", 15);
+    doctor1.displayInfo();
+
+    doctor1.assignPatient("Ali");
+    doctor1.assignPatient("Sumaiyah");
+
+    return 0;
+}
