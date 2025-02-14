@@ -1,0 +1,68 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include<string>
+using namespace std;
+class Employee    
+    {    
+        private:  
+        int id;  string name;  
+        public:
+        Employee(int id, string name)    
+       {    
+           this->id = id;    
+           this->name = name; 
+             cout<<"employee parameterized created"<<endl;
+       }  
+       Employee() {
+           cout<<"employee created"<<endl;
+       }
+     void display()    
+       {    cout<<" "<<name<< " "<<  endl;} 
+     void set (int id, string name)    
+       {    
+           this->id = id;    
+           this->name = name;    
+       }  
+    };
+class Department {
+    private:
+    string name; Employee HoD; int numEmployees; int maxEmployees; Employee employees[5];
+public:
+
+    Department(string name, string managerName, int managerID,  int maxEmployees)
+    : name(name), HoD( managerID,managerName), numEmployees(0), maxEmployees(maxEmployees) {}
+void Display()
+{
+    cout<<"Department Name "<<name<<endl;
+    cout<<"Hod Name";
+    HoD.display();
+}
+ void addEmployee(string name, int id) {
+    if (numEmployees < maxEmployees) {
+        employees[numEmployees++] = Employee(id, name);
+       // employees[numEmployees++].set(id,name);
+    } else {
+        cout << "Error: Department is at maximum capacity." << endl;
+    }
+}
+void displayEmployees() {
+    cout << "Employees in the " << name << " department:" << endl;
+    cout << "HoD: "; 
+    HoD.display();
+    for (int i = 0; i < numEmployees; ++i) {
+        cout << i<<"-" ;
+        employees[i].display();
+    }
+}};
+int main() {  
+
+    const int maxEmployeesPerDepartment = 5;
+    Department CS("Computer Science", "Dr. Ghufran", 1234, maxEmployeesPerDepartment);
+    CS.Display();
+    CS.addEmployee("Sumaiyah",1543);
+    CS.displayEmployees(); 
+   return 0;  
+} 
+
+
+
