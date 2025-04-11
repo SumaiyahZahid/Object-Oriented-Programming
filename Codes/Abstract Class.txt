@@ -1,0 +1,63 @@
+Create an abstract base class called Product with the following data members: id (an integer), name (a string), price (a double), and description (a string). Declare a virtual function called printDetails() that will print the product details.
+Create three subclasses of Product: ElectronicProduct, BookProduct, and ClothingProduct. Each subclass should have additional data members unique to that type of product. For example, ElectronicProduct could have a manufacturer (a string) and a warrantyPeriod (an integer), BookProduct could have an author (a string) and a publisher (a string), and ClothingProduct could have a size (a string) and a material (a string). 
+
+Each subclass should also override the printDetails() function to print the product details along with the unique properties.
+
+Create an array of Product objects and initialize them with different types of products. Use a loop to call the printDetails() function for each object, which should print the product details along with the unique properties specific to that type of product.
+
+Help:
+ElectronicProduct e(1, "Laptop", 999.99, "High-performance laptop", "Dell", 2);
+BookProduct b(2, "The Great Gatsby", 12.99, "Classic American novel", "F. Scott Fitzgerald",
+"Scribner");
+ClothingProduct c(3, "Men's T-shirt", 19.99, "Comfortable cotton t-shirt", "M", "Cotton");
+Product* products[] = {&e, &b, &c};
+
+
+
+
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+class Base {
+    protected:
+    int a;
+    public:
+    //virtual void setA(int) = 0;
+    Base() {
+        a = 0;
+    }
+    Base(int i) {
+        a = i;
+    }
+    int getA(){
+        return a;
+    }
+    virtual void func() = 0;
+    virtual ~Base() {
+        cout << "Destroyed Base\n";
+    }
+};
+
+class Derived : public Base{
+    public:
+    Derived() : Base() {}
+    Derived(int i) : Base(i) {}
+    void func() override {
+        cout << "Overriden in Derived class : " << getA() << endl;
+    }
+    ~Derived() {
+        cout << "Destroyed Derived\n";
+    }
+};
+
+int main() {
+    //Base obj;
+    Base *ptr;
+    //ptr = new Base(10);
+    ptr = new Derived();
+    ptr->func();
+    Derived obj(10);
+    obj.func();
+    delete ptr;
+    return 0;
+}
