@@ -1,0 +1,53 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+class student{
+	int roll;
+	char name[25];
+	float marks;
+	public:
+	void getdata(){
+			cout << "enter roll no" << endl;
+			cin >> roll;
+			cout << "enter  name" << endl;
+			cin >> name;
+			cout << "enter marks" << endl;
+			cin >> marks;}
+	void displayStudent(){
+		cout<<"Roll no: "<<roll<<endl
+		 <<"NAME: "<<name<<endl
+		 <<"Marks: "<<marks<<endl;	}	
+	void addRecord()
+		{
+			fstream f;
+			student s;
+			f.open("studen.dat",ios::app | ios::binary );
+			s.getdata();
+			f.write((char*)&s, sizeof(s));
+			f.close();
+					
+		}
+	void Readdata(){
+			fstream f;
+			student s;
+			f.open("studen.dat",ios::in | ios::binary);
+         if(f.read((char*)&s,sizeof(s))){
+			cout<<endl<<endl;
+			s.displayStudent();}
+	else{
+		cout<<"Error in reading data from file...\n";
+		}
+	}	
+};
+int main()
+{
+	student s;
+	char c = 'n';
+	do{
+		s.addRecord();
+		cout << "do you want to add another record";
+		cin >> c;	
+		} while (c == 'y' || c == 'Y');
+	cout << "data written successfully";
+	s.Readdata();		
+}

@@ -1,0 +1,53 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+struct Student {
+    int id;
+    string name;
+    float GPA;
+};
+
+int main() {
+    ofstream outfile("students.dat", ios::out | ios::binary);
+    if (!outfile) {
+        cerr << "Failed to open file for writing!" << endl;
+        return 1;
+    }
+
+    Student s1 = {1, "John", 3.8};
+    outfile.write((char*)&s1, sizeof(Student));
+    Student s2 = {1, "Ali", 3.5};
+    outfile.write((char*)&s2, sizeof(Student));
+    outfile.close();
+
+    fstream file("students.dat", ios::in | ios::out | ios::binary);
+    if (!file) {
+        cerr << "Failed to open file for updating!" << endl;
+        return 1;
+    }
+    file.seekg(0);
+    Student s_read;
+    file.read((char*)&s_read, sizeof(Student));
+    cout << "Initial Student Data: ID-" << s_read.id << ", Name-" << s_read.name << ", GPA-" << s_read.GPA << endl;
+    file.read((char*)&s_read, sizeof(Student));
+    cout << "Initial Student Data: ID-" << s_read.id << ", Name-" << s_read.name << ", GPA-" << s_read.GPA << endl;
+    cout<<file.tellg()<<endl;
+    cout<<file.tellp()<<endl;
+    file.seekp(sizeof(Student),ios::beg);
+    cout<<file.tellg()<<endl;
+    cout<<file.tellp()<<endl;
+    Student s_update = {1, "Ali", 4.0}; 
+    file.write((char*)&s_update, sizeof(Student));
+    file.seekg(sizeof(Student),ios::beg);
+    file.read((char*)&s_read, sizeof(Student));
+    cout << "Updated Student Data: ID-" << s_read.id << ", Name-" << s_read.name << ", GPA-" << s_read.GPA << endl;
+    
+    file.seekg(0);
+    file.read((char*)&s_read, sizeof(Student));
+    cout << "Updated Student Data: ID-" << s_read.id << ", Name-" << s_read.name << ", GPA-" << s_read.GPA << endl;
+    file.close();
+
+    return 0;
+}
