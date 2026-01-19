@@ -3,7 +3,7 @@
 Hey there, curious coder! 
 
 This repo is here to guide you, challenge you, and make sure you have FUN along the way! 
-It has all the resource material you will need for **Spring 2025 CS1004 Object Oriented Programming Course**.
+It has all the resource material you will need for **CS1004 Object Oriented Programming Course**.
 
 ## 🛠 **How to Use This Repo**
 1. **Clone it**: `git clone https://github.com/SumaiyahZahid/Object-Oriented-Programming.git`
