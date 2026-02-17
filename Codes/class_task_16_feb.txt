@@ -1,0 +1,122 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Post;   
+class User {
+private:
+    string name;
+    Post* posts[5];
+    int postCount;
+
+public:
+    User(string n) {
+        name = n;
+        postCount = 0;
+        for (int i = 0; i < 5; i++)
+            posts[i] = nullptr;
+    }
+
+    string getName() const {
+        return name;
+    }
+
+    bool addPost(Post* p) {
+        if (postCount >= 5)
+            return false;
+
+        posts[postCount++] = p;
+        return true;
+    }
+
+    void showPosts() const;
+
+    ~User() {
+        cout << "User Destroyed: " << name << endl;
+    }
+};
+
+class Comment {
+private:
+    string text;
+    User* author;
+
+public:
+    Comment(string t="", User* u=nullptr) {
+        text = t;
+        author = u;
+    }
+
+    void display() const {
+        cout << author->getName() << " commented: " << text << endl;
+    }
+
+    ~Comment() {
+        cout << "Comment Destroyed\n";
+    }
+};
+
+class Post {
+private:
+    string content;
+    Comment comments[5];   // Composition
+    int commentCount;
+public:
+    Post(string c) {
+        content = c;
+        commentCount = 0;
+    }
+
+    bool addComment(string text, User* user) {
+        if (commentCount >= 5)
+            return false;
+        comments[commentCount] =  Comment(text, user);
+        commentCount++;
+        return true;
+    }
+
+    void display() const {
+        cout << "\nPost " << ": " << content << endl;
+        cout << "Comments:\n";
+
+        for (int i = 0; i < commentCount; i++)
+            comments[i].display();
+    }
+
+    ~Post() {
+        cout << "Post Destroyed\n";
+    }
+};
+
+void User::showPosts() const {
+    cout << "\nPosts by " << name << ":\n";
+    for (int i = 0; i < postCount; i++)
+        posts[i]->display();
+}
+
+int main() {
+    User* user1 = new User("Alpha");
+    User* user2 = new User("Beta");
+    User* user3 = new User("Charlie");
+
+    Post* post1 = new Post("Hello World!");
+    Post* post2 = new Post("OOP is interesting!");
+
+    user1->addPost(post1);
+    user1->addPost(post2);
+
+    post1->addComment("Nice post!", user2);
+    post1->addComment("Welcome!", user3);
+    post2->addComment("Agreed!", user2);
+
+    user1->showPosts();
+
+    delete post1;   
+    delete post2;
+    delete user1;
+    delete user2;
+    delete user3;
+   
+
+    return 0;
+}

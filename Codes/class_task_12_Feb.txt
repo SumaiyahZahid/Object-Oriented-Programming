@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class User
+{
+    string name, cell;
+    int age;
+public:
+    User() : name(""), cell(""), age(0) {}
+    User(string n, string c, int a) : name(n), cell(c), age(a) {}
+    User(const User& u)
+    {
+        name = u.name;
+        cell = u.cell;
+        age = u.age;
+    }
+    void display() const
+    {
+        cout << "Name: " << name << endl;
+        cout << "Cell: " << cell << endl;
+        cout << "Age: " << age << endl;
+    }
+};
+
+class WhatsAppGroup
+{
+    string groupname, dateofcreation;
+    User* members[5];   // aggregation
+    User* admin;        //Admin aggregation
+
+public:
+  
+    WhatsAppGroup() : groupname(""), dateofcreation(""), admin(nullptr)
+    {
+        for (int i = 0; i < 5; i++)
+            members[i] = nullptr;
+    }
+    WhatsAppGroup(string gname, string date, User* admin, User* members[], int size)
+        : groupname(gname), dateofcreation(date)
+    {   this->admin=admin;
+        for (int i = 0; i < 5; i++)
+        {
+            if (i < size)
+                this->members[i] = members[i];  
+            else
+                this->members[i] = nullptr;
+        }
+    }
+    WhatsAppGroup(const WhatsAppGroup& w)
+    {
+        this->groupname = w.groupname;
+        this->dateofcreation = w.dateofcreation;
+        this->admin = w.admin;   
+        for (int i = 0; i < 5; i++)
+        {
+            this->members[i] = w.members[i]; 
+        }
+    }
+    void display() const
+    {
+        cout << "Group Name: " << groupname << endl;
+        cout << "Date of Creation: " << dateofcreation << endl;
+
+        cout << "\nAdmin Details:\n";
+        if (admin != nullptr)
+            admin->display();
+
+        cout << "\nGroup Members:\n";
+        for (int i = 0; i < 5; i++)
+        {
+            if (members[i] != nullptr)
+            {
+                cout << "\nMember " << i + 1 << ":\n";
+                members[i]->display();
+            }
+        }
+    }
+};
+
+int main()
+{
+    User admin("Ali", "03001234567", 25);
+    User users[3] = {
+        User("Ahmed", "03111111111", 22),
+        User("Sara", "03222222222", 23),
+        User("Bilal", "03333333333", 24)
+    };
+    User* userPtrs[3] = { &users[0], &users[1], &users[2] };
+    WhatsAppGroup group1("OOP Group", "12-02-2026", &admin, userPtrs, 3);
+    group1.display();
+    WhatsAppGroup group2 = group1;
+    cout<<"____________________"<<endl;
+    group2.display();
+    return 0;
+}
